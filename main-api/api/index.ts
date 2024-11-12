@@ -1,1 +1,3 @@
-export * from './auth';
+import authRouter from './auth';
+
+export { authRouter };

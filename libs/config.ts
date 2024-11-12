@@ -1,11 +1,14 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import { singleton } from 'tsyringe';
 
+dotenv.config();
+
+@singleton()
 class Config {
-  private static instance: Config;
   private envConfig: { [key: string]: string };
 
-  private constructor() {
+  constructor() {
     const env = process.env.NODE_ENV || 'development';
     dotenv.config({ path: `.env.${env}` });
 
@@ -14,13 +17,6 @@ class Config {
       PORT: process.env.PORT || '3000',
       JWT_SECRET: process.env.JWT_SECRET || 'secret',
     };
-  }
-
-  public static getInstance(): Config {
-    if (!Config.instance) {
-      Config.instance = new Config();
-    }
-    return Config.instance;
   }
 
   public async connectDB(): Promise<void> {
