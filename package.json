@@ -2,6 +2,9 @@
   "name": "si-server",
   "version": "1.0.0",
   "main": "index.js",
+  "_moduleAliases": {
+    "@libs": "dist/libs"
+  },
   "scripts": {
     "dev": "npx nodemon",
     "build": "rimraf ./dist && tsc && tsc-alias",
@@ -27,6 +30,11 @@
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "express": "^5.0.1"
+    "@types/module-alias": "^2.0.4",
+    "dotenv": "^16.4.5",
+    "express": "^5.0.1",
+    "module-alias": "^2.2.3",
+    "mongoose": "^8.8.0",
+    "tsyringe": "^4.8.0"
   }
 }
