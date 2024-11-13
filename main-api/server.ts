@@ -3,6 +3,7 @@ import { Application, default as express, Request, Response } from 'express';
 import { authRouter } from './api';
 import Config from '@libs/config';
 import { container } from 'tsyringe';
+import { ErrorHandler } from './middlewares';
 
 function initRoutes(app: Application) {
   app.use('/api/v1/auth', authRouter);
@@ -21,4 +22,6 @@ export async function server() {
   app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
   });
+
+  app.use(ErrorHandler);
 }
