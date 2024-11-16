@@ -1,4 +1,4 @@
-import { BaseResponse } from '@libs/base';
+import { BaseResponse } from '../base';
 
 export class ErrorResponse<T> extends BaseResponse<T> {
   constructor(
