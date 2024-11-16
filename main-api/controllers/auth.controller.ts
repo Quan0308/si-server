@@ -19,13 +19,16 @@ export class AuthController {
         throw new ValidationException(err);
       }
       const { email, password } = data;
+      const existedUser = this.userModel.find({ email });
+      if (existedUser) {
+        throw new Error('Existed email');
+      }
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 
       await this.userModel.create({ email, password: hashedPassword });
       return 'Register successfully';
     } catch (err) {
-      console.log('error: ', err);
       throw err;
     }
   }
@@ -40,7 +43,7 @@ export class AuthController {
         ? await bcrypt.compare(plain.password, user.password)
         : false;
       if (!user || !compared) {
-        new Error('Invalid email or password');
+        throw new Error('Invalid email or password');
       }
 
       return { accessToken: user.id, refreshToken: 'refresh' };
