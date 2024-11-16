@@ -1,13 +1,32 @@
-import { Router, Request, Response } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
+import { SuccessResponse } from '@libs/types';
 import internalProvider from 'main-api/providers/internal';
 
 const authRouter = Router();
 
-authRouter.post('/register', (req: Request, res: Response) => {
-  const authController = internalProvider.getAuthController();
-  const newUser = authController.register(req.body);
-  res.send(newUser);
-});
-authRouter.post('/login', (req: Request, res: Response) => {});
+authRouter.post(
+  '/register',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const authController = internalProvider.getAuthController();
+      const newUser = await authController.register(req.body);
+      res.status(200).json(new SuccessResponse(newUser));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+authRouter.post(
+  '/login',
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const authController = internalProvider.getAuthController();
+      const authenticated = await authController.login(req.body);
+      res.status(200).json(new SuccessResponse(authenticated));
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 export default authRouter;

@@ -20,9 +20,9 @@ const userSchema = new Schema<IUser>(
   {
     email: { type: String, required: true },
     password: { type: String, required: true },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
-    dob: { type: Date, required: true },
+    firstName: { type: String, required: false },
+    lastName: { type: String, required: false },
+    dob: { type: Date, required: false },
   },
   { timestamps: true }
 );
